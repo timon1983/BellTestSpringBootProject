@@ -2,8 +2,6 @@ package com.example.BellTestProject.controller;
 
 import com.example.BellTestProject.model.Organization;
 import com.example.BellTestProject.service.OrganizationService;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,14 +35,17 @@ public class OrganizationController {
         return new ResponseEntity<List<Organization>>(organizations,headers,HttpStatus.OK);
     }
 
-    @ApiResponses(value = {
-            @ApiResponse(code = 200 , message = "Success" , response = String.class),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Failure")
-    })
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200 , message = "Success" , response = String.class),
+//            @ApiResponse(code = 404, message = "Not Found"),
+//            @ApiResponse(code = 500, message = "Failure")
+//    })
     @PostMapping("/save")
-    public void saveOrganization(@RequestBody Organization organization){
+    public ResponseEntity<Organization> saveOrganization(@RequestBody Organization organization){
+        HttpHeaders headers = new HttpHeaders();
         System.out.println(organization);
         organizationService.saveOrganization(organization);
+        return new ResponseEntity<Organization>(organization, headers,HttpStatus.OK);
+
     }
 }
