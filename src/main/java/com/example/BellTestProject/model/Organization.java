@@ -35,7 +35,7 @@ public class Organization {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @OneToMany(mappedBy = "organization")
+    @OneToMany(mappedBy = "organization" , fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Office> offices;
 

@@ -26,12 +26,12 @@ public class Office {
     @Column(name = "is_active")
     private boolean isActive;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "organization_id")
     @JsonIgnore
     private Organization organization;
 
-    @OneToMany(mappedBy = "office")
+    @OneToMany(mappedBy = "office" , fetch = FetchType.LAZY)
     @JsonIgnore
     List<User> users;
 
