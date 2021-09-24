@@ -1,4 +1,4 @@
-package com.example.BellTestProject.DAO;
+package com.example.BellTestProject.dao;
 
 import com.example.BellTestProject.model.Country;
 

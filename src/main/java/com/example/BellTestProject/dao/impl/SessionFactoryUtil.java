@@ -1,4 +1,4 @@
-package com.example.BellTestProject.DAO.impl;
+package com.example.BellTestProject.dao.impl;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

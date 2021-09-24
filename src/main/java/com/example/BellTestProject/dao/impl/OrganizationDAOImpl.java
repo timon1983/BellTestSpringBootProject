@@ -1,7 +1,7 @@
-package com.example.BellTestProject.DAO.impl;
+package com.example.BellTestProject.dao.impl;
 
 import com.example.BellTestProject.model.Organization;
-import com.example.BellTestProject.DAO.OrganizationDAO;
+import com.example.BellTestProject.dao.OrganizationDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;

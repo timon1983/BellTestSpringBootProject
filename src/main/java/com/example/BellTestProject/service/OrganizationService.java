@@ -1,7 +1,6 @@
 package com.example.BellTestProject.service;
 
-import com.example.BellTestProject.DAO.OrganizationDAO;
-import com.example.BellTestProject.DAO.impl.OrganizationDAOImpl;
+import com.example.BellTestProject.dao.OrganizationDAO;
 import com.example.BellTestProject.model.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +11,10 @@ import java.util.List;
 @Service
 public class OrganizationService {
 
-    private OrganizationDAOImpl organizationDAO;
+    private OrganizationDAO organizationDAO;
 
     @Autowired
-    public OrganizationService(OrganizationDAOImpl organizationDAO) {
+    public OrganizationService(OrganizationDAO organizationDAO) {
         this.organizationDAO = organizationDAO;
     }
 
@@ -27,5 +26,15 @@ public class OrganizationService {
     @Transactional
     public void saveOrganization(Organization organization){
         organizationDAO.save(organization);
+    }
+
+    @Transactional
+    public Organization getById(int id){
+        return organizationDAO.getById(id);
+    }
+
+    @Transactional
+    public void updateOrganization(Organization organization) {
+        organizationDAO.update(organization);
     }
 }

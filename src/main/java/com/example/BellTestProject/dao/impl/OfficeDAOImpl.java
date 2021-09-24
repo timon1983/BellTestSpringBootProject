@@ -1,6 +1,6 @@
-package com.example.BellTestProject.DAO.impl;
+package com.example.BellTestProject.dao.impl;
 
-import com.example.BellTestProject.DAO.OfficeDAO;
+import com.example.BellTestProject.dao.OfficeDAO;
 import com.example.BellTestProject.model.Office;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,7 +20,7 @@ public class OfficeDAOImpl implements OfficeDAO {
 
     @Override
     public List<Office> getByOrganizationId(int orgId) {
-        TypedQuery<Office> query = em.createQuery("SELECT o FROM Office o JOIN FETCH Organization org WHERE o.organization.id =" +
+        TypedQuery<Office> query = em.createQuery("SELECT o FROM Office o WHERE  o.organization.id =" +
                 " " + orgId, Office.class);
         return query.getResultList();
     }
@@ -32,6 +32,8 @@ public class OfficeDAOImpl implements OfficeDAO {
 
     @Override
     public Office update(Office office) {
+        Office office1 = getById(office.getId());
+        office.setOrganization(office1.getOrganization());
         return em.merge(office);
     }
 

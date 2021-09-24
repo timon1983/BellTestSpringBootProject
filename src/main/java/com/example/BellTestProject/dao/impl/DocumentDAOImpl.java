@@ -1,6 +1,6 @@
-package com.example.BellTestProject.DAO.impl;
+package com.example.BellTestProject.dao.impl;
 
-import com.example.BellTestProject.DAO.DocumentDAO;
+import com.example.BellTestProject.dao.DocumentDAO;
 import com.example.BellTestProject.model.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

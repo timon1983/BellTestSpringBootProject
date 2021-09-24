@@ -1,6 +1,6 @@
-package com.example.BellTestProject.DAO.impl;
+package com.example.BellTestProject.dao.impl;
 
-import com.example.BellTestProject.DAO.UserDAO;
+import com.example.BellTestProject.dao.UserDAO;
 import com.example.BellTestProject.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,16 +26,20 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getById(int id) {
+
         return em.find(User.class, id);
     }
 
     @Override
     public User update(User user) {
+        User user1 = getById(user.getId());
+        user.setOffice(user1.getOffice());
         return em.merge(user);
     }
 
     @Override
     public void save(User user) {
+
         em.persist(user);
     }
 }

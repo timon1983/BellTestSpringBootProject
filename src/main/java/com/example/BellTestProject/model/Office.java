@@ -1,5 +1,7 @@
 package com.example.BellTestProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,9 +28,11 @@ public class Office {
 
     @ManyToOne
     @JoinColumn(name = "organization_id")
+    @JsonIgnore
     private Organization organization;
 
     @OneToMany(mappedBy = "office")
+    @JsonIgnore
     List<User> users;
 
     public Office() {
