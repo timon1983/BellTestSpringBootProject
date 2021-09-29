@@ -28,7 +28,8 @@ public class OfficeController {
     private ResponseViewData responseViewData;
 
     @Autowired
-    public OfficeController(OfficeService officeService, Organization organization, Office office, HttpHeaders headers, ResponseViewSuccess responseViewSuccess, ResponseViewData responseViewData) {
+    public OfficeController(OfficeService officeService, Organization organization, Office office, HttpHeaders headers,
+                            ResponseViewSuccess responseViewSuccess, ResponseViewData responseViewData) {
         this.officeService = officeService;
         this.organization = organization;
         this.office = office;

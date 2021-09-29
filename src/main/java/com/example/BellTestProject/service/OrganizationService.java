@@ -28,13 +28,14 @@ public class OrganizationService {
         organizationDAO.save(organization);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Organization getById(int id){
         return organizationDAO.getById(id);
     }
 
     @Transactional
     public void updateOrganization(Organization organization) {
+
         organizationDAO.update(organization);
     }
 }

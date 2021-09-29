@@ -4,6 +4,7 @@ import com.example.BellTestProject.dto.UserDTO;
 import com.example.BellTestProject.exception.NoSuchDataException;
 import com.example.BellTestProject.model.Office;
 import com.example.BellTestProject.model.User;
+import com.example.BellTestProject.service.OfficeService;
 import com.example.BellTestProject.service.UserService;
 import com.example.BellTestProject.view.ResponseViewData;
 import com.example.BellTestProject.view.ResponseViewSuccess;
@@ -19,6 +20,8 @@ import java.util.List;
 @RequestMapping("api/user")
 public class UserController {
 
+    @Autowired
+    OfficeService officeService;
     private UserService userService;
     private Office office;
     private User user;
@@ -27,7 +30,8 @@ public class UserController {
     private ResponseViewData responseViewData;
 
     @Autowired
-    public UserController(UserService userService, Office office, User user, HttpHeaders headers, ResponseViewSuccess responseViewSuccess, ResponseViewData responseViewData) {
+    public UserController(UserService userService, Office office, User user, HttpHeaders headers, ResponseViewSuccess responseViewSuccess,
+                          ResponseViewData responseViewData) {
         this.userService = userService;
         this.office = office;
         this.user = user;
@@ -50,12 +54,13 @@ public class UserController {
 
     @PostMapping("/save")
     public ResponseEntity<ResponseViewData> saveUser(@RequestBody UserDTO userDTO){
+
         user.setFirstName(userDTO.getFirstName());
         user.setPosition(userDTO.getPosition());
         user.setPhone(userDTO.getPhone());
         user.setIdentified(userDTO.isIdentified());
-        office.setId(userDTO.getOfficeId());
-        user.setOffice(office);
+        //office.setId(userDTO.getOfficeId());
+        user.setOffice(officeService.getOfficeById(userDTO.getOfficeId()));
         userService.saveUser(user);
         responseViewData.setData(responseViewSuccess);
         return new ResponseEntity<>(responseViewData,headers, HttpStatus.OK);

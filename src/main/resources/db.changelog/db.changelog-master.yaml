@@ -1,0 +1,176 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-master.yaml
+  - changeSet:
+      id: 1
+      author: timon
+      changes:
+        - createTable:
+            tableName: organizations
+            columns:
+              - column:
+                  name: organization_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: full_name
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: inn
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: kpp
+                  type: INT
+                  constraints:
+                      nullable: false
+              - column:
+                  name: address
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+  - changeSet:
+      id: 2
+      author: timon
+      changes:
+        - createTable:
+            tableName: offices
+            columns:
+              - column:
+                  name: office_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+              - column:
+                  name: organization_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: organization_id
+                    references: organizations(organization_id)
+  - changeSet:
+      id: 3
+      author: timon
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: user_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: first_name
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: position
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_identified
+                  type: boolean
+              - column:
+                  name: office_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: office_id
+                    references: offices(office_id)
+  - changeSet:
+      id: 4
+      author: timon
+      changes:
+        - createTable:
+            tableName: docs
+            columns:
+              - column:
+                  name: doc_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: code
+                  type: INT
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 5
+      author: timon
+      changes:
+        - createTable:
+            tableName: countries
+            columns:
+              - column:
+                  name: country_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: code
+                  type: INT
+                  constraints:
+                    nullable: false

@@ -23,7 +23,7 @@ public class UserService {
         return userDAO.getByOfficeId(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User getById(int id){
         return userDAO.getById(id);
     }

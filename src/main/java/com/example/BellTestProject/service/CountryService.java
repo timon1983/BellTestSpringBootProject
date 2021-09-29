@@ -18,7 +18,7 @@ public class CountryService {
         this.countryDAO = countryDAO;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Country> getAllCountries(){
         return countryDAO.getAll();
     }

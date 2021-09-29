@@ -23,7 +23,7 @@ public class User {
     @Column(name = "is_identified")
     private boolean isIdentified;
 
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.MERGE)
    @JoinColumn(name = "office_id")
    private Office office;
 

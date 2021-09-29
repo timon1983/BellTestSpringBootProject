@@ -20,7 +20,7 @@ public class OfficeDAOImpl implements OfficeDAO {
 
     @Override
     public List<Office> getByOrganizationId(int orgId) {
-        TypedQuery<Office> query = em.createQuery("SELECT o FROM Office o WHERE  o.organization.id =" +
+        TypedQuery<Office> query = em.createQuery("SELECT o FROM Office o WHERE o.organization.id =" +
                 " " + orgId, Office.class);
         return query.getResultList();
     }
@@ -39,6 +39,6 @@ public class OfficeDAOImpl implements OfficeDAO {
 
     @Override
     public void save(Office office) {
-        em.persist(office);
+        em.merge(office);
     }
 }

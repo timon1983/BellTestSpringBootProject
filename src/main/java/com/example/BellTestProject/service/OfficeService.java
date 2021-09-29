@@ -28,7 +28,7 @@ public class OfficeService {
         officeDAO.save(office);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Office getOfficeById(int id){
         return officeDAO.getById(id);
     }

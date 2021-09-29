@@ -5,7 +5,13 @@ import com.example.BellTestProject.model.Organization;
 import com.example.BellTestProject.service.OrganizationService;
 import com.example.BellTestProject.view.ResponseViewData;
 import com.example.BellTestProject.view.ResponseViewSuccess;
+
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,46 +20,59 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/organization")
+
+@Tag(name = "Организации", description = "Контроллер для операций над организациями")
 public class OrganizationController {
 
     private OrganizationService organizationService;
-    private HttpHeaders headers;
-    private ResponseViewSuccess responseViewSuccess;
-    private ResponseViewData responseViewData;
 
     @Autowired
-    public OrganizationController(OrganizationService organizationService, HttpHeaders headers, ResponseViewSuccess responseViewSuccess , ResponseViewData responseViewData) {
+    public OrganizationController(OrganizationService organizationService) {
         this.organizationService = organizationService;
-        this.headers = headers;
-        this.responseViewSuccess = responseViewSuccess;
-        this.responseViewData = responseViewData;
+    }
+
+    @Lookup
+    public HttpHeaders getHeaders(){
+        return null;
+    }
+    @Lookup
+    public ResponseViewData getResponseViewData(){
+        return null;
+    }
+    @Lookup
+    public ResponseViewSuccess getResponseViewSuccess(){
+        return null;
     }
 
     @PostMapping("/list")
+    @Operation(
+            summary = "Список организаций",
+            description = "Позволяет получить список организаций по имени"
+    )
     public ResponseEntity<ResponseViewData> getAllOrganizationByName(@RequestBody Organization organization){
         List<Organization> organizations = organizationService.findAllOrganizationByName(organization.getName());
         if(organizations.isEmpty()){
             throw new NoSuchDataException("Нет организации с именем = " + organization.getName());
         }
-        responseViewData.setData(organizations);
-        return new ResponseEntity<>(responseViewData,headers,HttpStatus.OK);
+        getResponseViewData().setData(organizations);
+        return new ResponseEntity<>(getResponseViewData(),getHeaders(),HttpStatus.OK);
     }
 
     @PostMapping("/save")
     public ResponseEntity<ResponseViewData> saveOrganization(@RequestBody Organization organization) {
         organizationService.saveOrganization(organization);
-        responseViewData.setData(responseViewSuccess);
-        return new ResponseEntity<>(responseViewData,headers, HttpStatus.OK);
+        getResponseViewData().setData(getResponseViewSuccess());
+        return new ResponseEntity<>(getResponseViewData(),getHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseViewData> getOrganizationById(@PathVariable("id") int id){
+    public ResponseEntity<ResponseViewData> getOrganizationById(@PathVariable("id") @Parameter(description = "Идентификатор организации в БД") int id){
         Organization organization = organizationService.getById(id);
         if(organization == null){
             throw new NoSuchDataException("Нет организации с ID = " + id);
         }
-        responseViewData.setData(organization);
-        return new ResponseEntity<>(responseViewData, headers, HttpStatus.OK);
+        getResponseViewData().setData(organization);
+        return new ResponseEntity<>(getResponseViewData(), getHeaders(), HttpStatus.OK);
     }
 
     @PostMapping("/update")
@@ -64,8 +83,8 @@ public class OrganizationController {
         }else {
             organizationService.updateOrganization(organization);
         }
-        responseViewData.setData(responseViewSuccess);
-        return new ResponseEntity<>(responseViewData,headers, HttpStatus.OK);
+        getResponseViewData().setData(getResponseViewSuccess());
+        return new ResponseEntity<>(getResponseViewData(),getHeaders(), HttpStatus.OK);
     }
 }
 

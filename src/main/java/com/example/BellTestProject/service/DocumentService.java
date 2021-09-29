@@ -18,7 +18,7 @@ public class DocumentService {
         this.documentDAO = documentDAO;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Document> getAllDocuments(){
         return documentDAO.getAll();
     }
