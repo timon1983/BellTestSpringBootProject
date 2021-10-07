@@ -42,7 +42,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 
     @Override
     public void save(Organization organization) {
-        em.persist(organization);
+        em.merge(organization);
     }
 
     private CriteriaQuery<Organization> buildCriteria(String name) {

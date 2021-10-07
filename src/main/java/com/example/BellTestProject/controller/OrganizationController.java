@@ -26,6 +26,8 @@ public class OrganizationController {
 
     private OrganizationService organizationService;
 
+
+
     @Autowired
     public OrganizationController(OrganizationService organizationService) {
         this.organizationService = organizationService;
@@ -33,14 +35,17 @@ public class OrganizationController {
 
     @Lookup
     public HttpHeaders getHeaders(){
+
         return null;
     }
     @Lookup
-    public ResponseViewData getResponseViewData(){
+    public ResponseViewData getResponseData(){
+
         return null;
     }
     @Lookup
-    public ResponseViewSuccess getResponseViewSuccess(){
+    public ResponseViewSuccess getResponseView(){
+
         return null;
     }
 
@@ -54,15 +59,17 @@ public class OrganizationController {
         if(organizations.isEmpty()){
             throw new NoSuchDataException("Нет организации с именем = " + organization.getName());
         }
-        getResponseViewData().setData(organizations);
-        return new ResponseEntity<>(getResponseViewData(),getHeaders(),HttpStatus.OK);
+        ResponseViewData responseViewData = getResponseData();
+        responseViewData.setData(organizations);
+        return new ResponseEntity<>(responseViewData,getHeaders(),HttpStatus.OK);
     }
 
     @PostMapping("/save")
     public ResponseEntity<ResponseViewData> saveOrganization(@RequestBody Organization organization) {
         organizationService.saveOrganization(organization);
-        getResponseViewData().setData(getResponseViewSuccess());
-        return new ResponseEntity<>(getResponseViewData(),getHeaders(), HttpStatus.OK);
+        ResponseViewData responseViewData = getResponseData();
+        responseViewData.setData(getResponseView());
+        return new ResponseEntity<>(responseViewData,getHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -71,8 +78,9 @@ public class OrganizationController {
         if(organization == null){
             throw new NoSuchDataException("Нет организации с ID = " + id);
         }
-        getResponseViewData().setData(organization);
-        return new ResponseEntity<>(getResponseViewData(), getHeaders(), HttpStatus.OK);
+        ResponseViewData responseViewData = getResponseData();
+        responseViewData.setData(organization);
+        return new ResponseEntity<>(responseViewData, getHeaders(), HttpStatus.OK);
     }
 
     @PostMapping("/update")
@@ -83,8 +91,9 @@ public class OrganizationController {
         }else {
             organizationService.updateOrganization(organization);
         }
-        getResponseViewData().setData(getResponseViewSuccess());
-        return new ResponseEntity<>(getResponseViewData(),getHeaders(), HttpStatus.OK);
+        ResponseViewData responseViewData = getResponseData();
+        responseViewData.setData(getResponseView());
+        return new ResponseEntity<>(responseViewData,getHeaders(), HttpStatus.OK);
     }
 }
 
