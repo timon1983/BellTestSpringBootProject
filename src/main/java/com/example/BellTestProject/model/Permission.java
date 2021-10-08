@@ -5,7 +5,7 @@ public enum Permission {
     ORGANIZATIONS_READ("organizations:read"),
     ORGANIZATIONS_WRITE("organizations:write"),
     OFFICES_READ("offices:read"),
-    OFFICES_WRITE("OFFICES:write"),
+    OFFICES_WRITE("offices:write"),
     USERS_READ("users:read"),
     USERS_WRITE("users:write"),
     DOCUMENTS_READ("documents:read"),

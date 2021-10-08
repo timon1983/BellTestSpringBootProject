@@ -13,12 +13,12 @@ import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/organization")
-
 @Tag(name = "Организации", description = "Контроллер для операций над организациями")
 public class OrganizationController {
 
@@ -31,6 +31,7 @@ public class OrganizationController {
         this.organizationService = organizationService;
     }
 
+    /**Внедрение прототайп бинов в бин синглтон*/
     @Lookup
     public HttpHeaders getHeaders(){
 
@@ -48,6 +49,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/list")
+    @PreAuthorize("hasAuthority('organizations:read')")
     @Operation(
             summary = "Список организаций",
             description = "Позволяет получить список организаций по имени"
@@ -63,6 +65,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('organizations:write')")
     public ResponseEntity<ResponseViewData> saveOrganization(@RequestBody Organization organization) {
         organizationService.saveOrganization(organization);
         ResponseViewData responseViewData = getResponseData();
@@ -71,6 +74,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('organizations:read')")
     public ResponseEntity<ResponseViewData> getOrganizationById(@PathVariable("id") @Parameter(description = "Идентификатор организации в БД") int id){
         Organization organization = organizationService.getById(id);
         if(organization == null){
@@ -82,6 +86,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('organizations:write')")
     public ResponseEntity<ResponseViewData> updateOrganization(@RequestBody Organization organization) {
         Organization organization1 = organizationService.getById(organization.getId());
         if(organization1 == null){

@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/list")
+    @PreAuthorize("hasAuthority('users:read')")
     public ResponseEntity<ResponseViewData> getAllUserByOfficeId(@RequestBody UserDTO userDTO){
         office.setId(userDTO.getOfficeId());
         user.setOffice(office);
@@ -53,6 +55,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('users:write')")
     public ResponseEntity<ResponseViewData> saveUser(@RequestBody UserDTO userDTO){
 
         user.setFirstName(userDTO.getFirstName());
@@ -67,6 +70,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('users:read')")
     public ResponseEntity<ResponseViewData> getOfficeById(@PathVariable("id") int id){
         User user = userService.getById(id);
         if(user == null){
@@ -77,6 +81,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('users:write')")
     public ResponseEntity<ResponseViewData> updateOffice(@RequestBody User user){
         User user1 = userService.getById(user.getId());
         if(user1 == null){

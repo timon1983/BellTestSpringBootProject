@@ -23,6 +23,10 @@ public class LogingAspect {
 
         System.out.println("AfterAdvice " + joinPoint.getSignature().getName());
     }
+    @After("@annotation(com.example.BellTestProject.annotation.Logging)")
+    public void AfterAdviceOrg(JoinPoint joinPoint){
+        System.out.println("AfterAdvice " + joinPoint.getSignature().getName());
+    }
 
     @Around("execution(* com.example.BellTestProject.service.OrganizationService.*(..))")
     public Object AroundAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {

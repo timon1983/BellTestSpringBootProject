@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class OfficeController {
     }
 
     @PostMapping("/list")
+    @PreAuthorize("hasAuthority('offices:read')")
     public ResponseEntity<ResponseViewData> getAllOfficeByOrganizationId(@RequestBody OfficeDTO officeDTO){
         organization.setId(officeDTO.getOrgId());
         office.setOrganization(organization);
@@ -51,6 +53,7 @@ public class OfficeController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('offices:write')")
     public ResponseEntity<ResponseViewData> saveOffice(@RequestBody OfficeDTO officeDTO){
         office.setName(officeDTO.getName());
         office.setAddress( officeDTO.getAddress());
@@ -64,6 +67,7 @@ public class OfficeController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('offices:read')")
     public ResponseEntity<ResponseViewData> getOfficeById(@PathVariable("id") int id){
         Office office = officeService.getOfficeById(id);
         if(office == null){
@@ -74,6 +78,7 @@ public class OfficeController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAuthority('offices:write')")
     public ResponseEntity<ResponseViewData> updateOffice(@RequestBody Office office){
         Office office1 = officeService.getOfficeById(office.getId());
         if(office1 == null){

@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.mockito.Mockito.when;
 
 
@@ -22,7 +21,6 @@ class UserServiceTest {
     UserDAO userDAO = Mockito.mock(UserDAOImpl.class);
     @Mock
     UserService userService = Mockito.mock(UserService.class);
-
 
     @Test
     void check_getAllUsersByOfficeId_Should_Return_All_Users_By_OfficeId(){
