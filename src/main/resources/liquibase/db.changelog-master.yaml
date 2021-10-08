@@ -1,5 +1,5 @@
 databaseChangeLog:
-  - logicalFilePath: db/changelog/db.changelog-master.yaml
+  - logicalFilePath: liquibase/db.changelog-master.yaml
   - changeSet:
       id: 1
       author: timon
@@ -100,7 +100,6 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-
               - column:
                   name: first_name
                   type: varchar(45)
@@ -174,3 +173,115 @@ databaseChangeLog:
                   type: INT
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 6
+      author: timon
+      changes:
+        - createTable:
+            tableName: userauth
+            columns:
+              - column:
+                  name: user_auth_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: e_mail
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_ref
+                  type: INT
+                  constraints:
+                    references: userauth(user_auth_id)
+                    nullable: false
+  - changeSet:
+      id: 7
+      author: timon
+      changes:
+        - insert:
+            tableName: userauth
+            colums:
+              - column:
+                 name: user_auth_id
+                 value: 1
+              - column:
+                 name: e_mail
+                 value: user@mail.ru
+              - column:
+                  name: name
+                  value: user
+              - column:
+                  name: password
+                  value: $2y$12$DZTnEPABdW7Yj6dvPpgUheg09ZPxpELyl1VyIEsypF9AfuJZ5ziQW
+              - column:
+                  name: role
+                  value: USER
+              - column:
+                  name: status
+                  value: ACTIVE
+        - insert:
+            tableName: userauth
+            colums:
+              - column:
+                  name: user_auth_id
+                  value: 2
+              - column:
+                  name: e_mail
+                  value: moder@mail.ru
+              - column:
+                  name: name
+                  value: moderator
+              - column:
+                  name: password
+                  value: $2y$12$GOzPRBjQCK798lc7lntVWev3AK.AC46HzNHmHSyxVfdHEnufaCJt6
+              - column:
+                  name: role
+                  value: MODER
+              - column:
+                  name: status
+                  value: ACTIVE
+        - insert:
+            tableName: userauth
+            colums:
+              - column:
+                  name: user_auth_id
+                  value: 3
+              - column:
+                  name: e_mail
+                  value: admin@mail.ru
+              - column:
+                  name: name
+                  value: administrator
+              - column:
+                  name: password
+                  value: $2y$12$/K2yKTu6Qdq3l.st9dcK9u7s5ni8la5sRHAkXP2DM7mgZbFCPaJ8C
+              - column:
+                  name: role
+                  value: ADMIN
+              - column:
+                  name: status
+                  value: ACTIVE

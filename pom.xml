@@ -27,6 +27,7 @@
 		<swagger-annotations.version>2.1.6</swagger-annotations.version>
 		<springdoc-openapi-ui.version>1.5.2</springdoc-openapi-ui.version>
 		<jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
+		<lombok.version>1.18.20</lombok.version>
 		<openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
 		<junit.jupiter.version>5.8.0-M1</junit.jupiter.version>
 		<junit.version>4.13.2</junit.version>
@@ -51,7 +52,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
-
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>

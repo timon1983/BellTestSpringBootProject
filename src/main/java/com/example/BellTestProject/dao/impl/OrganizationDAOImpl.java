@@ -4,8 +4,6 @@ import com.example.BellTestProject.model.Organization;
 import com.example.BellTestProject.dao.OrganizationDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.test.context.ActiveProfiles;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +16,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 
     private final EntityManager em;
 
-//    @Autowired
+    @Autowired
     public OrganizationDAOImpl(EntityManager em) {
         this.em = em;
     }

@@ -5,8 +5,6 @@ import com.example.BellTestProject.model.Organization;
 import com.example.BellTestProject.service.OrganizationService;
 import com.example.BellTestProject.view.ResponseViewData;
 import com.example.BellTestProject.view.ResponseViewSuccess;
-
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
