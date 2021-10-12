@@ -1,0 +1,368 @@
+openapi: 3.0.1
+info:
+  title: BellTestProject
+  contact:
+    name: Timur Akhunov
+    email: timon1983@yandex.ru
+  version: 1.0.1
+servers:
+- url: http://localhost:8088
+  description: Generated server url
+tags:
+- name: Организации
+  description: Контроллер для операций над организациями
+paths:
+  /api/user/update:
+    post:
+      tags:
+      - user-controller
+      operationId: updateOffice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/user/save:
+    post:
+      tags:
+      - user-controller
+      operationId: saveUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/user/list:
+    post:
+      tags:
+      - user-controller
+      operationId: getAllUserByOfficeId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/organization/update:
+    post:
+      tags:
+      - Организации
+      operationId: updateOrganization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/organization/save:
+    post:
+      tags:
+      - Организации
+      operationId: saveOrganization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/organization/list:
+    post:
+      tags:
+      - Организации
+      summary: Список организаций
+      description: Позволяет получить список организаций по имени
+      operationId: getAllOrganizationByName
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/office/update:
+    post:
+      tags:
+      - office-controller
+      operationId: updateOffice_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Office'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/office/save:
+    post:
+      tags:
+      - office-controller
+      operationId: saveOffice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfficeDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/office/list:
+    post:
+      tags:
+      - office-controller
+      operationId: getAllOfficeByOrganizationId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfficeDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/user/{id}:
+    get:
+      tags:
+      - user-controller
+      operationId: getOfficeById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/organization/{id}:
+    get:
+      tags:
+      - Организации
+      operationId: getOrganizationById
+      parameters:
+      - name: id
+        in: path
+        description: Идентификатор организации в БД
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/office/{id}:
+    get:
+      tags:
+      - office-controller
+      operationId: getOfficeById_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/docs:
+    get:
+      tags:
+      - document-controller
+      operationId: getAllDocs
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+  /api/country:
+    get:
+      tags:
+      - country-controller
+      operationId: getAllCountries
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ResponseViewData'
+components:
+  schemas:
+    Office:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        address:
+          type: string
+        phone:
+          type: integer
+          format: int32
+        active:
+          type: boolean
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        position:
+          type: string
+        phone:
+          type: integer
+          format: int32
+        office:
+          $ref: '#/components/schemas/Office'
+        identified:
+          type: boolean
+    ResponseViewData:
+      type: object
+      properties:
+        data:
+          type: object
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Идентификатор пользователя
+          format: int32
+          example: 1
+        firstName:
+          type: string
+          readOnly: true
+        position:
+          type: string
+        phone:
+          type: integer
+          format: int32
+        officeId:
+          type: integer
+          format: int32
+        identified:
+          type: boolean
+      description: Схема пользователя
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        fullName:
+          type: string
+        inn:
+          type: integer
+          format: int32
+        kpp:
+          type: integer
+          format: int32
+        address:
+          type: string
+        phone:
+          type: integer
+          format: int32
+        active:
+          type: boolean
+    OfficeDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        address:
+          type: string
+        phone:
+          type: integer
+          format: int32
+        orgId:
+          type: integer
+          format: int32
+        active:
+          type: boolean
