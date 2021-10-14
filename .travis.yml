@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - openjdk11
+
+before_install:
+  - chmod +x mvnw
+
+script:
+  - mvn clean test
+
+notifications:
+  email: timon1983@yandex.ru
