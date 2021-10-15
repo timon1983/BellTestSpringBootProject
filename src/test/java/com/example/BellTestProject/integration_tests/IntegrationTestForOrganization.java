@@ -1,4 +1,4 @@
-package com.example.BellTestProject.ItTest;
+package com.example.BellTestProject.integration_tests;
 
 import com.example.BellTestProject.controller.OrganizationController;
 import com.example.BellTestProject.dao.OrganizationDAO;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-/**Интеграционный тест ,проверяем запись сущности organization ,
+/** интеграционный тест ,проверяем запись сущности organization ,
  * сравниваем данные сущности после ее извлечения . При проверке используем
  * базу h2 , конфигурация в файле application-h2.properties
  */
@@ -21,17 +21,24 @@ import static org.junit.Assert.assertNotNull;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ActiveProfiles("h2")
 @Transactional
-public class OrganizationItTest {
+public class IntegrationTestForOrganization {
 
-    @Autowired
+
     OrganizationController organizationController;
-    @Autowired
+
     OrganizationDAO organizationDAO;
-    @Autowired
+
     Organization organization;
 
+    @Autowired
+    public IntegrationTestForOrganization(OrganizationController organizationController, OrganizationDAO organizationDAO, Organization organization) {
+        this.organizationController = organizationController;
+        this.organizationDAO = organizationDAO;
+        this.organization = organization;
+    }
+
     @Test
-    public void createOrganization_saveOrganization(){
+    public void createOrganizationAndSaveOrganization(){
 
         organization.setName("Bell");
         organization.setFullName("BellIntegrator");
