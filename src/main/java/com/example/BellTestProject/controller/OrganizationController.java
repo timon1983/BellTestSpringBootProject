@@ -75,7 +75,7 @@ public class OrganizationController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('organizations:read')")
-    public ResponseEntity<ResponseViewData> getOrganizationById(@PathVariable("id") @Parameter(description = "Идентификатор организации в БД") int id){
+    public ResponseEntity<ResponseViewData> getOrganizationById(@PathVariable("id") @Parameter(description = "идентификатор организации в БД") int id){
         Organization organization = organizationService.getById(id);
         if(organization == null){
             throw new NoSuchDataException("Нет организации с ID = " + id);

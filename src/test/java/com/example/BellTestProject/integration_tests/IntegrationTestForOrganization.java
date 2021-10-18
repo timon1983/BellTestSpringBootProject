@@ -1,7 +1,6 @@
 package com.example.BellTestProject.integration_tests;
 
 import com.example.BellTestProject.controller.AuthenticationRestController;
-import com.example.BellTestProject.controller.OrganizationController;
 import com.example.BellTestProject.dao.OrganizationDAO;
 import com.example.BellTestProject.dto.AuthenticationRequestDTO;
 import com.example.BellTestProject.model.Organization;
@@ -25,11 +24,10 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-/** интеграционный тест ,проверяем запись сущности organization ,
- * сравниваем данные сущности после ее извлечения . При проверке используем
- * базу h2 , конфигурация в файле application-h2.properties
+/** Интеграционный тест ,проверка записи сущности organization в БД , затем
+ * сравнивнение данных сущности после ее извлечения . При проверке используется
+ * база данных h2 , конфигурация в файле application-h2.properties
  */
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ActiveProfiles(value = "h2" )
@@ -38,33 +36,33 @@ import static org.junit.Assert.assertNotNull;
 public class IntegrationTestForOrganization {
 
     @Autowired
-    OrganizationDAO organizationDAO;
-    @Autowired
     Organization organization;
-    @Autowired
-    AuthenticationRestController authenticationRestController;
-
     private RestTemplate restTemplate;
     private String token;
 
-    /** прохождение аутентификации и получение JWT токена*/
+
+    /** Получение JWT токена*/
     @BeforeAll
-    public void getAuth(){
+    public void getAuth() throws URISyntaxException {
+
         restTemplate = new RestTemplate();
+        String URLAuth = "http://localhost:8088/api/auth/login";
+        URI uriAuth = new URI(URLAuth);
         AuthenticationRequestDTO authenticationRequestDTO = new AuthenticationRequestDTO();
         authenticationRequestDTO.setEmail("admin@gmail.com");
         authenticationRequestDTO.setPassword("admin");
-        ResponseEntity<Map<Object , Object>> response = (ResponseEntity<Map<Object, Object>>) authenticationRestController.authenticate(authenticationRequestDTO);
+        ResponseEntity<Map> response = restTemplate.postForEntity(uriAuth , authenticationRequestDTO , Map.class);
         Map<Object , Object> map =  response.getBody();
         token = (String) map.get("token");
         System.out.println(token);
     }
 
+    /** Запись сущности в БД , получение данных из БД , сравнение результатов*/
     @Test
     public void createOrganizationAndSaveOrganization() throws URISyntaxException {
 
-        String URL = "http://localhost:8088/api/organization/save";
-        URI uri = new URI(URL);
+        String URLSave = "http://localhost:8088/api/organization/save";
+        URI uriSave = new URI(URLSave);
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Authorization" , token);
         organization.setId(1);
@@ -76,11 +74,11 @@ public class IntegrationTestForOrganization {
         organization.setPhone(333);
         HttpEntity<Organization> request = new HttpEntity<>(organization, headers);
         System.out.println(request);
-        restTemplate.postForEntity(uri , request , Map.class);
+        restTemplate.postForEntity(uriSave , request , Map.class);
 
-        String URL2 = "http://localhost:8088/api/organization/1";
+        String URLGet = "http://localhost:8088/api/organization/1";
         HttpEntity<MultiValueMap<String, String>> request2 = new HttpEntity<>(null, headers);
-        ResponseEntity<ResponseViewData> responseEntity = restTemplate.exchange(URL2 , HttpMethod.GET, request2 , ResponseViewData.class);
+        ResponseEntity<ResponseViewData> responseEntity = restTemplate.exchange(URLGet , HttpMethod.GET, request2 , ResponseViewData.class);
         ResponseViewData responseViewData = responseEntity.getBody();
         Map<String , String> orgMap = (Map<String, String>) responseViewData.getData();
 

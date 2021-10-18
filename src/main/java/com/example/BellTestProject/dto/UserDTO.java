@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Схема пользователя")
 public class UserDTO {
 
-    @Schema(description = "Идентификатор пользователя", example = "1")
+    @Schema(description = "идентификатор пользователя", example = "1")
     private int id;
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String firstName;
