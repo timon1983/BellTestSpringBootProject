@@ -6,8 +6,6 @@ import com.example.BellTestProject.dao.OrganizationDAO;
 import com.example.BellTestProject.dto.AuthenticationRequestDTO;
 import com.example.BellTestProject.model.Organization;
 import com.example.BellTestProject.view.ResponseViewData;
-import io.jsonwebtoken.Header;
-import org.hibernate.Session;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -21,16 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -46,9 +37,6 @@ import static org.junit.Assert.assertNotNull;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class IntegrationTestForOrganization {
 
-
-    @Autowired
-    OrganizationController organizationController;
     @Autowired
     OrganizationDAO organizationDAO;
     @Autowired
@@ -56,14 +44,13 @@ public class IntegrationTestForOrganization {
     @Autowired
     AuthenticationRestController authenticationRestController;
 
-
+    private RestTemplate restTemplate;
     private String token;
 
-
-
-
+    /** прохождение аутентификации и получение JWT токена*/
     @BeforeAll
     public void getAuth(){
+        restTemplate = new RestTemplate();
         AuthenticationRequestDTO authenticationRequestDTO = new AuthenticationRequestDTO();
         authenticationRequestDTO.setEmail("admin@gmail.com");
         authenticationRequestDTO.setPassword("admin");
@@ -76,47 +63,33 @@ public class IntegrationTestForOrganization {
     @Test
     public void createOrganizationAndSaveOrganization() throws URISyntaxException {
 
-        RestTemplate restTemplate = new RestTemplate();
         String URL = "http://localhost:8088/api/organization/save";
         URI uri = new URI(URL);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization" , token);
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-        params.add("id" , "1");
-        params.add("name" , "Bell");
-        params.add("fullName" , "BellIntegrator");
-        params.add("inn" , "1111");
-        params.add("kpp" , "22222");
-        params.add("address" , "Sverdlov92");
-        params.add("phone" , "333");
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("Authorization" , token);
+        organization.setId(1);
+        organization.setName("Bell");
+        organization.setFullName("BellIntegrator");
+        organization.setInn(1111);
+        organization.setKpp(22222);
+        organization.setAddress("Sverdlov92");
+        organization.setPhone(333);
+        HttpEntity<Organization> request = new HttpEntity<>(organization, headers);
         System.out.println(request);
-        restTemplate.exchange(uri , HttpMethod.POST ,  request , ResponseEntity.class );
-//        organization.setName("Bell");
-//        organization.setFullName("BellIntegrator");
-//        organization.setInn(1111);
-//        organization.setKpp(22222);
-//        organization.setAddress("Sverdlov92");
-//        organization.setPhone(333);
-//        System.out.println(organization);
+        restTemplate.postForEntity(uri , request , Map.class);
 
-//        organizationController.saveOrganization(organization);
+        String URL2 = "http://localhost:8088/api/organization/1";
+        HttpEntity<MultiValueMap<String, String>> request2 = new HttpEntity<>(null, headers);
+        ResponseEntity<ResponseViewData> responseEntity = restTemplate.exchange(URL2 , HttpMethod.GET, request2 , ResponseViewData.class);
+        ResponseViewData responseViewData = responseEntity.getBody();
+        Map<String , String> orgMap = (Map<String, String>) responseViewData.getData();
 
-
-        String URL2 = "localhost:8088/api/organization/1";
-        URI uri2 = new URI(URL2);
-        HttpEntity<MultiValueMap<String, String>> request2 = new HttpEntity<MultiValueMap<String, String>>(null, headers);
-        ResponseEntity organizationEntity = restTemplate.exchange(uri2 , HttpMethod.GET, request2 , ResponseEntity.class);
-        ResponseViewData responseViewData = (ResponseViewData) organizationEntity.getBody();
-        organization = (Organization) responseViewData.getData();
-        System.out.println(organization);
-        assertNotNull(organization);
-        assertEquals("Bell", organization.getName());
-        assertEquals("BellIntegrator", organization.getFullName());
-        assertEquals(1111, organization.getInn());
-        assertEquals(22222, organization.getKpp());
-        assertEquals("Sverdlov92", organization.getAddress());
-        assertEquals(333, organization.getPhone());
+        assertNotNull(orgMap);
+        assertEquals("Bell", orgMap.get("name"));
+        assertEquals("BellIntegrator", orgMap.get("fullName"));
+        assertEquals(1111, orgMap.get("inn"));
+        assertEquals(22222, orgMap.get("kpp"));
+        assertEquals("Sverdlov92", orgMap.get("address"));
+        assertEquals(333, orgMap.get("phone"));
     }
 }
