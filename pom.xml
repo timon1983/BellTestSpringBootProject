@@ -212,16 +212,6 @@
 			</plugin>
 		</plugins>
 
-		<resources>
-			<resource>
-				<directory>resources</directory>
-				<targetPath>/target</targetPath>
-				<includes>
-					<include>version.txt</include>
-				</includes>
-			</resource>
-		</resources>
-
 	</build>
 
 </project>
