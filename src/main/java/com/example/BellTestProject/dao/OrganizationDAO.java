@@ -1,6 +1,7 @@
 package com.example.BellTestProject.dao;
 
 import com.example.BellTestProject.model.Organization;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

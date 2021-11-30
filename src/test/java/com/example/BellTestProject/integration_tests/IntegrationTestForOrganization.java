@@ -1,10 +1,9 @@
 package com.example.BellTestProject.integration_tests;
 
-import com.example.BellTestProject.controller.AuthenticationRestController;
-import com.example.BellTestProject.dao.OrganizationDAO;
 import com.example.BellTestProject.dto.AuthenticationRequestDTO;
 import com.example.BellTestProject.model.Organization;
 import com.example.BellTestProject.view.ResponseViewData;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -21,19 +20,21 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
-/** Интеграционный тест ,проверка записи сущности organization в БД , затем
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+/** интеграционный тест ,проверка записи сущности organization в БД , затем
  * сравнивнение данных сущности после ее извлечения . При проверке используется
- * база данных h2 , конфигурация в файле application-h2.properties
+ * база данных h2 , конфигурация в файле application-test.properties
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ActiveProfiles(value = "h2" )
 @Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Ignore
 public class IntegrationTestForOrganization {
+
 
     @Autowired
     Organization organization;
@@ -80,9 +81,9 @@ public class IntegrationTestForOrganization {
         HttpEntity<MultiValueMap<String, String>> request2 = new HttpEntity<>(null, headers);
         ResponseEntity<ResponseViewData> responseEntity = restTemplate.exchange(URLGet , HttpMethod.GET, request2 , ResponseViewData.class);
         ResponseViewData responseViewData = responseEntity.getBody();
-        Map<String , String> orgMap = (Map<String, String>) responseViewData.getData();
+        Map<Object, Object> orgMap = (Map<Object, Object>) responseViewData.getData();
 
-        assertNotNull(orgMap);
+        assertNotNull(responseViewData.getData());
         assertEquals("Bell", orgMap.get("name"));
         assertEquals("BellIntegrator", orgMap.get("fullName"));
         assertEquals(1111, orgMap.get("inn"));

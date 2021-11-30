@@ -10,7 +10,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(NoSuchDataException.class)
     public ResponseError handleNotException(NoSuchDataException e){
-        ResponseError responseData = new ResponseError(e.getMessage());
-        return responseData;
+        return new ResponseError(e.getMessage());
     }
 }
+

@@ -162,6 +162,12 @@
 			<version>4.4.14</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>5.6.1.Final</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -180,14 +186,14 @@
 					<version>2.22.2</version>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-compiler-plugin</artifactId>-->
+<!--				<version>3.8.1</version>-->
+<!--				<configuration>-->
+<!--					<encoding>UTF-8</encoding>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 
 			<plugin>
 				<groupId>org.openapitools</groupId>
@@ -214,10 +220,10 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.2.0</version>
-			</plugin>
+<!--			<plugin>-->
+<!--				<artifactId>maven-resources-plugin</artifactId>-->
+<!--				<version>3.2.0</version>-->
+<!--			</plugin>-->
 
 		</plugins>
 

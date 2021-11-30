@@ -11,6 +11,4 @@ public class BellTestProjectApplication {
 		SpringApplication.run(BellTestProjectApplication.class, args);
 	}
 
-
-
 }
